@@ -1,5 +1,5 @@
 import { Orientation } from "../index.types"
-import { CardinalPoints, CoordinationMap } from "../constants"
+import { CardinalPoints, Directions } from "../constants"
 
 function move(position: Orientation) {
 	const newPosition = position
@@ -33,8 +33,41 @@ function rotate(position: Orientation, action: string) {
 	const newPosition = position
 	const current = position.direction
 
-	// @ts-ignore
-	newPosition.direction = CoordinationMap[action][current]
+	if (action === Directions.LEFT) {
+		switch (current) {
+			case CardinalPoints.EAST :
+				newPosition.direction = CardinalPoints.NORTH
+				break
+			case CardinalPoints.NORTH :
+				newPosition.direction = CardinalPoints.WEST
+				break
+			case CardinalPoints.SOUTH :
+				newPosition.direction = CardinalPoints.EAST
+				break
+			case CardinalPoints.WEST :
+				newPosition.direction = CardinalPoints.SOUTH
+				break
+			default:
+				break
+		}
+	} else if (action === Directions.RIGHT) {
+		switch (current) {
+			case CardinalPoints.EAST :
+				newPosition.direction = CardinalPoints.NORTH
+				break
+			case CardinalPoints.NORTH :
+				newPosition.direction = CardinalPoints.WEST
+				break
+			case CardinalPoints.SOUTH :
+				newPosition.direction = CardinalPoints.EAST
+				break
+			case CardinalPoints.WEST :
+				newPosition.direction = CardinalPoints.SOUTH
+				break
+			default:
+				break
+		}
+	}
 
 	return newPosition
 }
