@@ -28,7 +28,7 @@ class Controller {
 
   public getRoverPositions () {
     this.rovers.forEach(rover => {
-      console.log(rover.getLocation())
+      console.log(rover.location)
     })
   }
 

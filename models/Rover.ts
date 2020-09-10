@@ -21,6 +21,11 @@ class Rover {
     this.position = startingPosition
   }
 
+  get location () {
+    const { x, y, direction } = this.position
+    return `${x} ${y} ${direction}`
+  }
+
   public move (commands: string) {
     const orders = commands.split("")
     let position = this.position
@@ -36,11 +41,6 @@ class Rover {
         this.position = position
       }
     })
-  }
-
-  public getLocation () {
-    const { x, y, direction } = this.position
-    return `${x} ${y} ${direction}`
   }
 }
 
