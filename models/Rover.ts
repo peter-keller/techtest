@@ -1,48 +1,47 @@
 import { Coordinate, Orientation } from "../index.types"
 import instructions from "../helpers/instructions"
+import validatePosition from "../helpers/validation"
 import { Directions } from "../constants"
 
 /**
  * Creates a Rover isntance
  * @constructor
- * @param {Coordinate} boundaries - The maximum size of the area where the rovers explore
+ * @param {Coordinate} borderSize - The maximum size of the area where the rovers explore
  * @param {Orientation} startingPosition - The starting point and orientation of the rover instance
  */
 class Rover {
-  boundaries: Coordinate
+  borderSize: Coordinate
   position: Orientation
 
   constructor(
-    boundaries: Coordinate,
+    borderSize: Coordinate,
     startingPosition: Orientation
   ) {
-    this.boundaries = boundaries
+    this.borderSize = borderSize
     this.position = startingPosition
   }
 
   public move (commands: string) {
     const orders = commands.split("")
+    let position = this.position
+
     orders.forEach(movement => {
       if (movement === Directions.LEFT || movement === Directions.RIGHT) {
-        this.position = instructions.rotate(this.position, movement)
+        position = instructions.rotate(position, movement)
       } else if (movement === Directions.MOVE) {
-        this.position = instructions.move(this.position)
+        position = instructions.move(position)
+      }
+
+      if (validatePosition(this.borderSize, position)) {
+        this.position = position
       }
     })
+  }
+
+  public getLocation () {
+    const { x, y, direction } = this.position
+    return `${x} ${y} ${direction}`
   }
 }
 
 export default Rover
-
-// const {
-//   plateauSize,
-//   startingPosition,
-//   commands
-// } = translateArguments(
-// `5 5
-// 1 2 N
-// LMLMLMLMM
-// 3 3 E
-// MMRMMRMRRM`)
-
-// const rover = new Rover(plateauSize, startingPosition)

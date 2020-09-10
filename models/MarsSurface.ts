@@ -1,21 +1,20 @@
+import { Coordinate } from "../index.types"
+
 /**
  * Creates a MarsSurface instance
  * @constructor
  * @param {Coordinate} surfaceArea - The maximum size of the area where the rovers explore
  */
-
 class MarsSurface {
-  surfaceArea: number
+  borderSize: Coordinate
 
-  constructor (surfaceArea: number) {
-    this.surfaceArea = surfaceArea
+  constructor (borderSize: Coordinate) {
+    this.borderSize = borderSize
   }
 
-  public generateRovers (commands: string) {
-
+  public getBorderSize () {
+    return this.borderSize
   }
 }
 
 export default MarsSurface
-
-const surface = new MarsSurface(5)

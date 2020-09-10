@@ -10,4 +10,4 @@ function validatePosition(borders: Coordinate, position: Orientation) {
 	return true
 }
 
-export default { validatePosition }
+export default validatePosition

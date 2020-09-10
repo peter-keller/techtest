@@ -1,4 +1,4 @@
-import validation from "../validation"
+import validatePosition from "../validation"
 import { Orientation, Coordinate } from "../../index.types"
 
 describe("Helpers: validatePosition", () => {
@@ -17,22 +17,22 @@ describe("Helpers: validatePosition", () => {
   })
 
   it('returns false if X is below zero', () => {
-    expect(validation.validatePosition(defaultBorders, { ...defaultPosition, x: -1 })).toBeFalsy()
+    expect(validatePosition(defaultBorders, { ...defaultPosition, x: -1 })).toBeFalsy()
   })
 
   it('returns false if Y is below zero', () => {
-    expect(validation.validatePosition(defaultBorders, { ...defaultPosition, y: -1 })).toBeFalsy()
+    expect(validatePosition(defaultBorders, { ...defaultPosition, y: -1 })).toBeFalsy()
   })
 
   it('returns false if the Y position is larger than the current position', () => {
-    expect(validation.validatePosition(defaultBorders, { ...defaultPosition, y: 6 })).toBeFalsy()
+    expect(validatePosition(defaultBorders, { ...defaultPosition, y: 6 })).toBeFalsy()
   })
 
   it('returns false if the X position is larger than the current position', () => {
-    expect(validation.validatePosition(defaultBorders, { ...defaultPosition, x: 6 })).toBeFalsy()
+    expect(validatePosition(defaultBorders, { ...defaultPosition, x: 6 })).toBeFalsy()
   })
 
   it('returns true if moving is permitted', () => {
-    expect(validation.validatePosition(defaultBorders, { ...defaultPosition, y: 3 })).toBeTruthy()
+    expect(validatePosition(defaultBorders, { ...defaultPosition, y: 3 })).toBeTruthy()
   })
 })
