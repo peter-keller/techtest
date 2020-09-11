@@ -1,46 +1,63 @@
-import { Coordinate, Orientation } from "../index.types"
-import instructions from "../helpers/instructions"
-import validatePosition from "../helpers/validation"
-import { Directions } from "../constants"
+import { Orientation } from "../types/index.types"
+import { Directions, CardinalPoints } from "../constants"
 
 /**
- * Creates a Rover isntance
+ * Creates a Rover instance
  * @constructor
- * @param {Coordinate} borderSize - The maximum size of the area where the rovers explore
  * @param {Orientation} startingPosition - The starting point and orientation of the rover instance
  */
 class Rover {
-  borderSize: Coordinate
   position: Orientation
 
-  constructor(
-    borderSize: Coordinate,
-    startingPosition: Orientation
-  ) {
-    this.borderSize = borderSize
+  constructor(startingPosition: Orientation) {
     this.position = startingPosition
   }
 
-  get location () {
-    const { x, y, direction } = this.position
-    return `${x} ${y} ${direction}`
+  public move (x: number, y: number) {
+    this.position = { ...this.position, x, y }
   }
 
-  public move (commands: string) {
-    const orders = commands.split("")
-    let position = this.position
-
-    orders.forEach(movement => {
-      if (movement === Directions.LEFT || movement === Directions.RIGHT) {
-        position = instructions.rotate(position, movement)
-      } else if (movement === Directions.MOVE) {
-        position = instructions.move(position)
+  public rotate(directon: string) {
+    const newPosition = this.position
+    const current = this.position.direction
+  
+    if (directon === Directions.LEFT) {
+      switch (current) {
+        case CardinalPoints.EAST :
+          newPosition.direction = CardinalPoints.NORTH
+          break
+        case CardinalPoints.NORTH :
+          newPosition.direction = CardinalPoints.WEST
+          break
+        case CardinalPoints.SOUTH :
+          newPosition.direction = CardinalPoints.EAST
+          break
+        case CardinalPoints.WEST :
+          newPosition.direction = CardinalPoints.SOUTH
+          break
+        default:
+          break
       }
-
-      if (validatePosition(this.borderSize, position)) {
-        this.position = position
+    } else if (directon === Directions.RIGHT) {
+      switch (current) {
+        case CardinalPoints.EAST :
+          newPosition.direction = CardinalPoints.SOUTH
+          break
+        case CardinalPoints.NORTH :
+          newPosition.direction = CardinalPoints.EAST
+          break
+        case CardinalPoints.SOUTH :
+          newPosition.direction = CardinalPoints.WEST
+          break
+        case CardinalPoints.WEST :
+          newPosition.direction = CardinalPoints.NORTH
+          break
+        default:
+          break
       }
-    })
+    }
+  
+    return newPosition
   }
 }
 
